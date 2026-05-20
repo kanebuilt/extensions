@@ -242,6 +242,11 @@
 
     askPrompt(args) {
       return new Promise((resolve) => {
+        if (this.isAsking && this.resolveAsk) {
+          this.resolveAsk('');
+          this.resolveAsk = null;
+        }
+
         this.rawPrompt = args.PROMPT.toString();
         this.promptSegments = this.parseFormatting(this.rawPrompt);
         this.isAsking = true;
