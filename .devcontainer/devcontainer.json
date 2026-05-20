@@ -3,5 +3,5 @@
 {
 	"name": "Node.js",
 	"image": "mcr.microsoft.com/devcontainers/javascript-node:4-24-trixie",
-	"postCreateCommand": "yarn install"
+	"postCreateCommand": "pnpm install"
 }
