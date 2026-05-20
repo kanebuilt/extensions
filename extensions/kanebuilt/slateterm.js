@@ -180,9 +180,29 @@
         this.canvas.style.display = 'block';
         this.draw();
       } else if (action === 'hide') {
+        if (this.resolveAsk) {
+          this.resolveAsk('');
+          this.resolveAsk = null;
+        }
+        this.isAsking = false;
+        this.isPassword = false;
+        this.currentInput = '';
+        this.promptSegments = [];
+        this.rawPrompt = '';
+
         this.visible = false;
         this.canvas.style.display = 'none';
       } else if (action === 'clear') {
+        if (this.resolveAsk) {
+          this.resolveAsk('');
+          this.resolveAsk = null;
+        }
+        this.isAsking = false;
+        this.isPassword = false;
+        this.currentInput = '';
+        this.promptSegments = [];
+        this.rawPrompt = '';
+
         this.history = [];
         this.visualLines = [];
         this.activeLoaders = [];
