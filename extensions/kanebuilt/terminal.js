@@ -290,10 +290,6 @@
     }
   }
 
-  {
-    TerminalExtension;
-  }
-
   TerminalExtension.prototype.setupRuntimeHooks = function () {
     if (typeof Scratch !== 'undefined' && Scratch.vm) {
       Scratch.vm.runtime.on('PROJECT_START', () => {
