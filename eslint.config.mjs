@@ -2,6 +2,7 @@ import globals from 'globals';
 import pluginJs from '@eslint/js';
 
 export default [
+  pluginJs.configs.recommended,
   {
     files: ['**/*.js', '**/*.mjs'],
     languageOptions: {
@@ -17,5 +18,4 @@ export default [
       'no-console': 'off',
     },
   },
-  pluginJs.configs.recommended,
 ];
