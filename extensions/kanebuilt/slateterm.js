@@ -4,7 +4,7 @@
 // By: KaneBuilt <https://github.com/kanebuilt>
 // License: GPL-3.0-only
 
-// Version: 0.1.0
+// Version: 0.1.1
 
 (function (Scratch) {
   'use strict';
