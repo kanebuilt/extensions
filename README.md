@@ -1,8 +1,8 @@
-<!-- You might want to use the Find & Replace tool in your editor to replace all mentions of "Template" (match caps) with your project's name. -->
+<!-- You might want to use the Find & Replace tool in your editor to replace all mentions of "KaneBuilt Extensions" (match caps) with your project's name. -->
 
 <h1>
-  <img src="./assets/icon.svg" alt="Template project icon" width="30" style="vertical-align: middle;">
-  Template
+  <img src="./assets/icon.svg" alt="KaneBuilt Extensions project icon" width="30" style="vertical-align: middle;">
+  KaneBuilt Extensions
 </h1>
 
 > <!-- A short description of your project. Ideally, it should be about three sentences, and shouldn't contain technical terminology. If your reader has no clue what your project is, this block should tell them about it without having to read the rest. -->
