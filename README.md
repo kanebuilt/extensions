@@ -5,6 +5,10 @@
 
 > Custom TurboWarp extensions developed by KaneBuilt (and some community maintainers!)
 
+| Extension name | Version  | URL                                                                       |
+| -------------- | -------- | ------------------------------------------------------------------------- |
+| Terminal       | `v0.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/terminal.js> |
+
 ## Documentation
 
 For additional documentation on the extensions in this repository, see [`docs/`](./docs/).
