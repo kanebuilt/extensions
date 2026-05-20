@@ -26,7 +26,7 @@ These categories of extensions are **highly discouraged**:
 - Broad "Utilities" extensions. Break them up into multiple extensions instead.
 - Extensions that are very similar to existing ones. Consider modifying the existing extension instead.
 - Very niche extensions. You can write the extension for yourself, then import it as a file instead without needing us to review.
-- Extensions whose primary purpose is monetization. It isn't in the spirit of a free and open source project.
+- Extensions whose primary purpose is monetization. It isn't in the spirit of a free and open-source project.
 - Joke extensions. Things that are funny to you are not funny to everyone, especially when we get bug reports about it.
 
 ---
@@ -35,7 +35,7 @@ These categories of extensions are **highly discouraged**:
 >
 > Every merged extension is more code that we are expected to maintain indefinitely, even if you disappear. Broken extensions mean that real projects by real people no longer work. If the renderer is rewritten one day, we will have to ensure that all extensions still work. That's not a small commitment.
 >
-> We're all volunteers who all have lives outside of TurboWarp extensions. Many have full time jobs or are full time students. We'll get to you as soon as we can, so please be patient.
+> We're all volunteers who all have lives outside of TurboWarp extensions. Many have full-time jobs or are full-time students. We'll get to you as soon as we can, so please be patient.
 
 ## Naming Your Extension
 
