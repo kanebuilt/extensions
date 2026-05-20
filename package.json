@@ -1,0 +1,26 @@
+{
+  "name": "@kanebuilt/extensions",
+  "version": "0.1.0",
+  "description": "Custom TurboWarp extensions developed by KaneBuilt (and some community maintainers!)",
+  "homepage": "https://github.com/kanebuilt/extensions#readme",
+  "bugs": {
+    "url": "https://github.com/kanebuilt/extensions/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kanebuilt/extensions.git"
+  },
+  "license": "LGPL-3.0-only",
+  "author": "KaneBuilt",
+  "type": "commonjs",
+  "scripts": {
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.4.0",
+    "globals": "^17.6.0",
+    "prettier": "^3.8.3"
+  }
+}
