@@ -461,7 +461,10 @@
         if (this.isPlainObject(source[key]) && this.isPlainObject(target[key])) {
           this.deepMerge(target[key], source[key]);
         } else {
-          target[key] = source[key];
+          target[key] =
+            typeof source[key] === 'object' && source[key] !== null
+              ? this.cloneValue(source[key])
+              : source[key];
         }
       }
       return target;
