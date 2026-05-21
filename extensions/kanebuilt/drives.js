@@ -1,8 +1,8 @@
 // Name: Drives
 // ID: kbDrives
 // Description: Give your Scratch projects a persistent, drive-based virtual file system.
-// By: KaneBuilt
-// License: LGPL-3.0-only
+// By: KaneBuilt <https://github.com/kanebuilt>
+// License: LGPL-2.1-only
 
 // Version: 0.1.0
 
