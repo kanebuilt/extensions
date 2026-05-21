@@ -7,6 +7,7 @@
 
 | Extension name | Version  | URL                                                                       |
 | -------------- | -------- | ------------------------------------------------------------------------- |
+| Signalling     | `v0.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/signalling.js> |
 | Dictionaries+  | `v0.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/dictplus.js> |
 | Drives         | `v0.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/drives.js>   |
 | Terminal       | `v0.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/terminal.js> |
