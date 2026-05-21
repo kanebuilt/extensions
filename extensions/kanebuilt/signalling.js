@@ -1,7 +1,7 @@
 // Name: Signalling
 // ID: kbSignalling
 // Description: The signal-based alternative to Scratch broadcasts. Bring IPC-like communication to your Scratch projects.
-// By: KaneBuilt
+// By: KaneBuilt <https://github.com/kanebuilt>
 // License: LGPL-2.1-only
 
 // Version: 0.1.0
