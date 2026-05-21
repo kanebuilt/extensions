@@ -7,8 +7,9 @@
 
 | Extension name | Version  | URL                                                                         |
 | -------------- | -------- | --------------------------------------------------------------------------- |
-| Terminal       | `v0.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/terminal.js>   |
 | Signalling     | `v0.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/signalling.js> |
+| Drives         | `v0.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/drives.js>     |
+| Terminal       | `v0.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/terminal.js>   |
 
 ## Documentation
 
