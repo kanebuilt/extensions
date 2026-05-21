@@ -5,11 +5,12 @@
 
 > Custom TurboWarp extensions developed by KaneBuilt (and some community maintainers!)
 
-| Extension name | Version  | URL                                                                         |
-| -------------- | -------- | --------------------------------------------------------------------------- |
+| Extension name | Version  | URL                                                                       |
+| -------------- | -------- | ------------------------------------------------------------------------- |
 | Signalling     | `v0.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/signalling.js> |
-| Drives         | `v0.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/drives.js>     |
-| Terminal       | `v0.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/terminal.js>   |
+| Dictionaries+  | `v0.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/dictplus.js> |
+| Drives         | `v0.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/drives.js>   |
+| Terminal       | `v0.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/terminal.js> |
 
 ## Documentation
 
