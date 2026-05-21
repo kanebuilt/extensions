@@ -4,7 +4,7 @@
 // By: KaneBuilt <https://github.com/kanebuilt>
 // License: LGPL-2.1-only
 
-// Version: 0.1.0
+// Version: 0.2.0
 
 (function (Scratch) {
   'use strict';
@@ -18,6 +18,9 @@
       // Use a WeakMap to map Scratch threads to their signals
       this.threadContexts = new WeakMap();
       this.currentSignal = null;
+
+      this.lastActionFailed = false;
+      this.lastError = '';
     }
 
     getInfo() {
@@ -104,6 +107,29 @@
               },
             },
           },
+          {
+            opcode: 'throwError',
+            blockType: Scratch.BlockType.COMMAND,
+            isTerminal: true,
+            text: 'throw error [ERROR]',
+            arguments: {
+              ERROR: {
+                type: Scratch.ArgumentType.STRING,
+                defaultValue: 'File not found',
+              },
+            },
+          },
+          '---',
+          {
+            opcode: 'didLastActionFail',
+            blockType: Scratch.BlockType.BOOLEAN,
+            text: 'did last action fail?',
+          },
+          {
+            opcode: 'getLastError',
+            blockType: Scratch.BlockType.REPORTER,
+            text: 'last error',
+          },
         ],
         menus: {
           targetsMenu: {
@@ -158,15 +184,54 @@
       const content = args.CONTENT;
       const senderName = util.target.getName();
 
-      this.currentSignal = { header, targetName };
+      // Reset error state for the new action
+      this.lastActionFailed = false;
+      this.lastError = '';
 
-      const threads = util.startHats('signalling_onSignal');
+      return new Promise((resolve) => {
+        this.currentSignal = { header, targetName };
+        const threadsStarted = util.startHats('kbSignalling_onSignal');
+        this.currentSignal = null;
 
-      this.currentSignal = null;
+        // If no targets were listening, resolve instantly
+        if (threadsStarted.length === 0) {
+          resolve();
+          return;
+        }
 
-      for (const thread of threads) {
-        this.threadContexts.set(thread, { content, sender: senderName });
-      }
+        let resolved = false;
+        const customResolve = () => {
+          if (!resolved) {
+            resolved = true;
+            resolve();
+          }
+        };
+
+        for (const thread of threadsStarted) {
+          this.threadContexts.set(thread, {
+            content: content,
+            sender: senderName,
+            resolve: customResolve,
+          });
+        }
+
+        // Poll threads to see if they've finished
+        const checkDone = setInterval(() => {
+          if (resolved) {
+            clearInterval(checkDone);
+            return;
+          }
+
+          // STATUS_DONE is 4 in Scratch's VM...
+          const anyAlive = threadsStarted.some((t) => t.status !== 4);
+
+          // If all threads finish without hitting a return block, resolve
+          if (!anyAlive) {
+            clearInterval(checkDone);
+            customResolve();
+          }
+        }, 1000 / 30);
+      });
     }
 
     sendCheck(args, util) {
@@ -175,9 +240,13 @@
       const content = args.CONTENT;
       const senderName = util.target.getName();
 
+      // Reset error state for the new check
+      this.lastActionFailed = false;
+      this.lastError = '';
+
       return new Promise((resolve) => {
         this.currentSignal = { header, targetName };
-        const threadsStarted = util.startHats('signalling_onSignal');
+        const threadsStarted = util.startHats('kbSignalling_onSignal');
         this.currentSignal = null;
 
         // If no targets were listening, return an empty string instantly
@@ -238,6 +307,27 @@
       }
 
       util.thread.status = 4; // STATUS_DONE
+    }
+
+    throwError(args, util) {
+      this.lastActionFailed = true;
+      this.lastError = Scratch.Cast.toString(args.ERROR);
+
+      const ctx = this.threadContexts.get(util.thread);
+      if (ctx && ctx.resolve) {
+        // Automatically returns empty string to unfreeze the sending check block
+        ctx.resolve('');
+      }
+
+      util.thread.status = 4; // STATUS_DONE
+    }
+
+    didLastActionFail() {
+      return this.lastActionFailed;
+    }
+
+    getLastError() {
+      return this.lastError;
     }
   }
 
