@@ -4,7 +4,7 @@
 // By: KaneBuilt <https://github.com/kanebuilt>
 // License: LGPL-2.1-only
 
-// Version: 1.0.0
+// Version: 1.0.1
 
 (function (Scratch) {
   'use strict';
@@ -38,6 +38,20 @@
           }
         }
       });
+    }
+
+    _stopPendingSignal(pending) {
+      if (!pending) return;
+
+      if (pending.callerThread && typeof pending.callerThread.stopThisScript === 'function') {
+        pending.callerThread.stopThisScript();
+      }
+
+      for (const thread of pending.threads) {
+        if (thread && typeof thread.stopThisScript === 'function') {
+          thread.stopThisScript();
+        }
+      }
     }
 
     getInfo() {
@@ -110,7 +124,13 @@
     sendAction(args, util) {
       return new Promise((resolve, reject) => {
         const signalId = ++signalIdCounter;
-        pendingSignals.set(signalId, { type: 'action', threads: [], resolve, reject });
+        pendingSignals.set(signalId, {
+          type: 'action',
+          threads: [],
+          resolve,
+          reject,
+          callerThread: util.thread,
+        });
 
         this._currentSignal = {
           header: args.HEADER,
@@ -136,7 +156,13 @@
     sendCheck(args, util) {
       return new Promise((resolve, reject) => {
         const signalId = ++signalIdCounter;
-        pendingSignals.set(signalId, { type: 'check', threads: [], resolve, reject });
+        pendingSignals.set(signalId, {
+          type: 'check',
+          threads: [],
+          resolve,
+          reject,
+          callerThread: util.thread,
+        });
 
         this._currentSignal = {
           header: args.HEADER,
@@ -185,6 +211,7 @@
       if (ctx && ctx.signalId) {
         const pending = pendingSignals.get(ctx.signalId);
         if (pending) {
+          this._stopPendingSignal(pending);
           // Action blocks just resolve early with nothing, check blocks resolve early with the value
           pending.resolve(pending.type === 'check' ? args.VALUE : undefined);
           pendingSignals.delete(ctx.signalId);
@@ -197,6 +224,7 @@
       if (ctx && ctx.signalId) {
         const pending = pendingSignals.get(ctx.signalId);
         if (pending) {
+          this._stopPendingSignal(pending);
           const errorOutput = JSON.stringify({ error: args.ERROR });
           pending.reject(errorOutput);
           pendingSignals.delete(ctx.signalId);
