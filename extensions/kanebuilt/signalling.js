@@ -119,7 +119,7 @@
           signalId: signalId,
         };
 
-        const threads = util.startHats('signallingIpc_whenSignal', {});
+        const threads = util.startHats('kbSignalling_whenSignal', {});
         this._currentSignal = null;
 
         if (threads.length === 0) {
@@ -145,7 +145,7 @@
           signalId: signalId,
         };
 
-        const threads = util.startHats('signallingIpc_whenSignal', {});
+        const threads = util.startHats('kbSignalling_whenSignal', {});
         this._currentSignal = null;
 
         if (threads.length === 0) {
