@@ -2,7 +2,7 @@
 // ID: kbCommentBlocks
 // Description: Turns Scratch's standard commenting system into blocks.
 // By: KaneBuilt <https://github.com/kanebuilt>
-// Origin: LilyMakesThings
+// Original: LilyMakesThings
 // License: LGPL-2.1-only
 
 // Version: 0.1.0
