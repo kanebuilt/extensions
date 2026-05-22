@@ -4,7 +4,7 @@
 // By: KaneBuilt <https://github.com/kanebuilt>
 // License: LGPL-2.1-only
 
-// Version: 1.0.1
+// Version: 1.0.2
 
 (function (Scratch) {
   'use strict';
@@ -43,10 +43,8 @@
     _stopPendingSignal(pending) {
       if (!pending) return;
 
-      if (pending.callerThread && typeof pending.callerThread.stopThisScript === 'function') {
-        pending.callerThread.stopThisScript();
-      }
-
+      // FIX: Removed the section that killed pending.callerThread.
+      // We only want to terminate the receiver/listener threads when a early return/error happens.
       for (const thread of pending.threads) {
         if (thread && typeof thread.stopThisScript === 'function') {
           thread.stopThisScript();
