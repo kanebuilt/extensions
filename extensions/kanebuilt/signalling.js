@@ -4,7 +4,7 @@
 // By: KaneBuilt <https://github.com/kanebuilt>
 // License: LGPL-2.1-only
 
-// Version: 0.2.0
+// Version: 0.2.1
 
 (function (Scratch) {
   'use strict';
@@ -19,6 +19,7 @@
       this.threadContexts = new WeakMap();
       this.currentSignal = null;
 
+      // Global state for error tracking
       this.lastActionFailed = false;
       this.lastError = '';
     }
@@ -199,10 +200,10 @@
           return;
         }
 
-        let resolved = false;
+        let isResolved = false;
         const customResolve = () => {
-          if (!resolved) {
-            resolved = true;
+          if (!isResolved) {
+            isResolved = true;
             resolve();
           }
         };
@@ -217,15 +218,19 @@
 
         // Poll threads to see if they've finished
         const checkDone = setInterval(() => {
-          if (resolved) {
+          if (isResolved) {
             clearInterval(checkDone);
             return;
           }
 
-          // STATUS_DONE is 4 in Scratch's VM...
-          const anyAlive = threadsStarted.some((t) => t.status !== 4);
+          // A highly robust check: look for STATUS_DONE (4) OR if the VM dropped the thread completely.
+          const anyAlive = threadsStarted.some((t) => {
+            if (t.status === 4) return false;
+            if (Scratch.vm.runtime.threads.indexOf(t) === -1) return false;
+            return true;
+          });
 
-          // If all threads finish without hitting a return block, resolve
+          // If all threads finish naturally or get dropped, resolve
           if (!anyAlive) {
             clearInterval(checkDone);
             customResolve();
@@ -255,10 +260,10 @@
           return;
         }
 
-        let resolved = false;
+        let isResolved = false;
         const customResolve = (val) => {
-          if (!resolved) {
-            resolved = true;
+          if (!isResolved) {
+            isResolved = true;
             resolve(val);
           }
         };
@@ -273,15 +278,19 @@
 
         // Poll threads to see if they've finished without calling 'return'
         const checkDone = setInterval(() => {
-          if (resolved) {
+          if (isResolved) {
             clearInterval(checkDone);
             return;
           }
 
-          // STATUS_DONE is 4 in Scratch's VM...
-          const anyAlive = threadsStarted.some((t) => t.status !== 4);
+          // A highly robust check: look for STATUS_DONE (4) OR if the VM dropped the thread completely.
+          const anyAlive = threadsStarted.some((t) => {
+            if (t.status === 4) return false;
+            if (Scratch.vm.runtime.threads.indexOf(t) === -1) return false;
+            return true;
+          });
 
-          // If all threads finish without hitting a return block, default to an empty string
+          // If all threads finish naturally or get dropped, default to an empty string
           if (!anyAlive) {
             clearInterval(checkDone);
             customResolve('');
@@ -303,7 +312,7 @@
     returnSignal(args, util) {
       const ctx = this.threadContexts.get(util.thread);
       if (ctx && ctx.resolve) {
-        ctx.resolve(args.VALUE);
+        ctx.resolve(Scratch.Cast.toString(args.VALUE));
       }
 
       util.thread.status = 4; // STATUS_DONE
