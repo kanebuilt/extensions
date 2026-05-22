@@ -25,7 +25,7 @@
       Scratch.vm.runtime.on('AFTER_EXECUTE', () => {
         for (const [signalId, info] of pendingSignals.entries()) {
           // Keep only the threads that are still currently active in the runtime
-          info.threads = info.threads.filter(t => Scratch.vm.runtime.threads.includes(t));
+          info.threads = info.threads.filter((t) => Scratch.vm.runtime.threads.includes(t));
 
           // If all threads spawned by this specific signal have completed naturally
           if (info.threads.length === 0) {
@@ -52,8 +52,8 @@
             text: 'send action [HEADER] with [CONTENT]',
             arguments: {
               HEADER: { type: Scratch.ArgumentType.STRING, defaultValue: 'removeSprite' },
-              CONTENT: { type: Scratch.ArgumentType.STRING, defaultValue: '{}' }
-            }
+              CONTENT: { type: Scratch.ArgumentType.STRING, defaultValue: '{}' },
+            },
           },
           {
             opcode: 'sendCheck',
@@ -61,8 +61,8 @@
             text: 'send check [HEADER] with [CONTENT]',
             arguments: {
               HEADER: { type: Scratch.ArgumentType.STRING, defaultValue: 'getFile' },
-              CONTENT: { type: Scratch.ArgumentType.STRING, defaultValue: 'config.json' }
-            }
+              CONTENT: { type: Scratch.ArgumentType.STRING, defaultValue: 'config.json' },
+            },
           },
           '---',
           {
@@ -71,18 +71,18 @@
             text: 'when signal [HEADER] received',
             isEdgeActivated: false,
             arguments: {
-              HEADER: { type: Scratch.ArgumentType.STRING, defaultValue: 'getFile' }
-            }
+              HEADER: { type: Scratch.ArgumentType.STRING, defaultValue: 'getFile' },
+            },
           },
           {
             opcode: 'signalContent',
             blockType: Scratch.BlockType.REPORTER,
-            text: 'signal content'
+            text: 'signal content',
           },
           {
             opcode: 'signalSender',
             blockType: Scratch.BlockType.REPORTER,
-            text: 'signal sender'
+            text: 'signal sender',
           },
           '---',
           {
@@ -91,8 +91,8 @@
             text: 'return [VALUE]',
             isTerminal: true,
             arguments: {
-              VALUE: { type: Scratch.ArgumentType.STRING, defaultValue: 'success' }
-            }
+              VALUE: { type: Scratch.ArgumentType.STRING, defaultValue: 'success' },
+            },
           },
           {
             opcode: 'throwError',
@@ -100,10 +100,10 @@
             text: 'throw error [ERROR]',
             isTerminal: true,
             arguments: {
-              ERROR: { type: Scratch.ArgumentType.STRING, defaultValue: 'File not found' }
-            }
-          }
-        ]
+              ERROR: { type: Scratch.ArgumentType.STRING, defaultValue: 'File not found' },
+            },
+          },
+        ],
       };
     }
 
@@ -116,7 +116,7 @@
           header: args.HEADER,
           content: args.CONTENT,
           sender: util.target.getName(),
-          signalId: signalId
+          signalId: signalId,
         };
 
         const threads = util.startHats('signallingIpc_whenSignal', {});
@@ -142,7 +142,7 @@
           header: args.HEADER,
           content: args.CONTENT,
           sender: util.target.getName(),
-          signalId: signalId
+          signalId: signalId,
         };
 
         const threads = util.startHats('signallingIpc_whenSignal', {});
@@ -166,7 +166,7 @@
       util.thread.__signallingContext = {
         content: this._currentSignal.content,
         sender: this._currentSignal.sender,
-        signalId: this._currentSignal.signalId
+        signalId: this._currentSignal.signalId,
       };
 
       return true;
