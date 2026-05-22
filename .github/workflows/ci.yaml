@@ -52,4 +52,4 @@ jobs:
         run: pnpm install
 
       - name: Format check
-        run: pnpm run format
+        run: pnpm run format --check
