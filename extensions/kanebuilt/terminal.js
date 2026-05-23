@@ -4,7 +4,7 @@
 // By: KaneBuilt <https://github.com/kanebuilt>
 // License: GPL-3.0-only
 
-// Version: 0.1.0
+// Version: 0.1.1
 
 /*
  * Previously named "SlateTerm", but it was renamed to appear more vanilla with the Scratch
@@ -20,7 +20,7 @@
       this.visible = false;
 
       this.padding = 4;
-      this.fontSize = 10;
+      this.fontSize = 12;
       this.lineHeight = 16;
       this.charWidth = 0;
       this.opacity = 0.75;
