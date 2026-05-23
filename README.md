@@ -7,11 +7,11 @@
 
 | Extension name | Version  | URL                                                                            |
 | -------------- | -------- | ------------------------------------------------------------------------------ |
+| Terminal       | `v0.1.1` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/terminal.js>      |
 | Comment Blocks | `v0.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/commentblocks.js> |
 | Signalling     | `v1.0.2` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/signalling.js>    |
 | Dictionaries+  | `v0.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/dictplus.js>      |
 | Drives         | `v0.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/drives.js>        |
-| Terminal       | `v0.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/terminal.js>      |
 
 ## Documentation
 
