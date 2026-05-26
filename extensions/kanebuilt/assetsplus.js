@@ -754,7 +754,8 @@
       target.renameSound(soundIndex, name);
     }
 
-    deleteSprite(args) {
+    // eslint-disable-next-line no-unused-vars
+    deleteSprite(args, util) {
       const target = this._getTargetFromMenu(args.TARGET);
       if (!target || target.isStage) return;
 
