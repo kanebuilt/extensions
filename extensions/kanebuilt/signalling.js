@@ -4,7 +4,7 @@
 // By: KaneBuilt <https://github.com/kanebuilt>
 // License: LGPL-2.1-only
 
-// Version: 1.0.2
+// Version: 1.1.0
 
 (function (Scratch) {
   'use strict';
@@ -23,9 +23,11 @@
 
       // Monitor threads at the end of every frame execution loop
       Scratch.vm.runtime.on('AFTER_EXECUTE', () => {
+        if (pendingSignals.size === 0) return;
+        const activeThreads = new Set(Scratch.vm.runtime.threads);
+
         for (const [signalId, info] of pendingSignals.entries()) {
-          // Keep only the threads that are still currently active in the runtime
-          info.threads = info.threads.filter((t) => Scratch.vm.runtime.threads.includes(t));
+          info.threads = info.threads.filter((t) => activeThreads.has(t));
 
           // If all threads spawned by this specific signal have completed naturally
           if (info.threads.length === 0) {
