@@ -7,7 +7,7 @@
 
 | Extension name | Version  | URL                                                                            |
 | -------------- | -------- | ------------------------------------------------------------------------------ |
-| Signalling     | `v1.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/signalling.js>    |
+| Signalling     | `v1.2.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/signalling.js>    |
 | Assets+        | `v0.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/assetsplus.js>    |
 | Terminal       | `v0.1.1` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/terminal.js>      |
 | Comment Blocks | `v0.1.0` | <https://kanebuilt.github.io/extensions/extensions/kanebuilt/commentblocks.js> |
