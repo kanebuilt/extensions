@@ -4,7 +4,7 @@
 // By: KaneBuilt <https://github.com/kanebuilt>
 // License: LGPL-2.1-only
 
-// Version: 1.1.0
+// Version: 1.2.0
 
 (function (Scratch) {
   'use strict';
@@ -45,8 +45,6 @@
     _stopPendingSignal(pending) {
       if (!pending) return;
 
-      // FIX: Removed the section that killed pending.callerThread.
-      // We only want to terminate the receiver/listener threads when a early return/error happens.
       for (const thread of pending.threads) {
         if (thread && typeof thread.stopThisScript === 'function') {
           thread.stopThisScript();
@@ -87,6 +85,17 @@
             arguments: {
               HEADER: { type: Scratch.ArgumentType.STRING, defaultValue: 'getFile' },
             },
+          },
+          {
+            opcode: 'whenAnySignal',
+            blockType: Scratch.BlockType.HAT,
+            text: 'when any signal received',
+            isEdgeActivated: false,
+          },
+          {
+            opcode: 'signalHeader',
+            blockType: Scratch.BlockType.REPORTER,
+            text: 'signal header',
           },
           {
             opcode: 'signalContent',
@@ -139,7 +148,11 @@
           signalId: signalId,
         };
 
-        const threads = util.startHats('kbSignalling_whenSignal', {});
+        // Start both specific and generic hat blocks
+        const specificThreads = util.startHats('kbSignalling_whenSignal', {});
+        const anyThreads = util.startHats('kbSignalling_whenAnySignal', {});
+        const threads = specificThreads.concat(anyThreads);
+        
         this._currentSignal = null;
 
         if (threads.length === 0) {
@@ -171,7 +184,11 @@
           signalId: signalId,
         };
 
-        const threads = util.startHats('kbSignalling_whenSignal', {});
+        // Start both specific and generic hat blocks
+        const specificThreads = util.startHats('kbSignalling_whenSignal', {});
+        const anyThreads = util.startHats('kbSignalling_whenAnySignal', {});
+        const threads = specificThreads.concat(anyThreads);
+        
         this._currentSignal = null;
 
         if (threads.length === 0) {
@@ -190,12 +207,30 @@
       if (args.HEADER !== this._currentSignal.header) return false;
 
       util.thread.__signallingContext = {
+        header: this._currentSignal.header, // Added header to context
         content: this._currentSignal.content,
         sender: this._currentSignal.sender,
         signalId: this._currentSignal.signalId,
       };
 
       return true;
+    }
+
+    whenAnySignal(args, util) {
+      if (!this._currentSignal) return false;
+
+      util.thread.__signallingContext = {
+        header: this._currentSignal.header,
+        content: this._currentSignal.content,
+        sender: this._currentSignal.sender,
+        signalId: this._currentSignal.signalId,
+      };
+
+      return true;
+    }
+
+    signalHeader(args, util) {
+      return util.thread.__signallingContext ? util.thread.__signallingContext.header : '';
     }
 
     signalContent(args, util) {
