@@ -152,7 +152,7 @@
         const specificThreads = util.startHats('kbSignalling_whenSignal', {});
         const anyThreads = util.startHats('kbSignalling_whenAnySignal', {});
         const threads = specificThreads.concat(anyThreads);
-        
+
         this._currentSignal = null;
 
         if (threads.length === 0) {
@@ -188,7 +188,7 @@
         const specificThreads = util.startHats('kbSignalling_whenSignal', {});
         const anyThreads = util.startHats('kbSignalling_whenAnySignal', {});
         const threads = specificThreads.concat(anyThreads);
-        
+
         this._currentSignal = null;
 
         if (threads.length === 0) {
