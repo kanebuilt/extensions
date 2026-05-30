@@ -538,6 +538,7 @@
           this._stopHeartbeat();
           this._clearPendingPublicRoomsRequest(true);
           this._roomInfoCache = { clientCount: 0, isHost: false };
+          this._roomInfoCache = { clientCount: 0, isHost: false };
           this._clearPendingRoomInfoRequest(true);
           this.connected = false;
           this.isHost = false;
@@ -570,6 +571,7 @@
       this.connected = false;
       this.isHost = false;
       this.currentRoom = '';
+      this.myId = '';
     }
 
     setServerAdminToken(args) {
