@@ -4,7 +4,7 @@
 // By: KaneBuilt <https://github.com/kanebuilt>
 // License: GPL-3.0-only
 
-// Version: 0.1.1
+// Version: 0.1.2
 
 /*
  * Previously named "SlateTerm", but it was renamed to appear more vanilla with the Scratch
@@ -54,6 +54,7 @@
 
       this.isAsking = false;
       this.isPassword = false;
+      this.focused = false;
       this.currentInput = '';
       this.promptSegments = [];
       this.rawPrompt = '';
@@ -195,6 +196,7 @@
         }
         this.isAsking = false;
         this.isPassword = false;
+        this.focused = false;
         this.currentInput = '';
         this.promptSegments = [];
         this.rawPrompt = '';
@@ -208,6 +210,7 @@
         }
         this.isAsking = false;
         this.isPassword = false;
+        this.focused = false;
         this.currentInput = '';
         this.promptSegments = [];
         this.rawPrompt = '';
@@ -260,6 +263,7 @@
         this.promptSegments = this.parseFormatting(this.rawPrompt);
         this.isAsking = true;
         this.isPassword = args.TYPE === 'password';
+        this.focused = true;
         this.currentInput = '';
         this.scrollOffset = 0;
         this.resolveAsk = resolve;
@@ -310,6 +314,16 @@
   };
 
   TerminalExtension.prototype.setupInputHandlers = function () {
+    // Added { capture: true } so this fires before Blockly swallows the workspace mousedown event
+    document.addEventListener(
+      'mousedown',
+      (e) => {
+        if (!this.visible) return;
+        this.focused = e.target === this.canvas;
+      },
+      { capture: true },
+    );
+
     this.canvas.addEventListener('wheel', (e) => {
       if (!this.visible) return;
       e.preventDefault();
@@ -318,7 +332,9 @@
     });
 
     document.addEventListener('keydown', (e) => {
-      if (!this.visible || !this.isAsking) return;
+      if (!this.visible || !this.isAsking || !this.focused) return;
+
+      if (['INPUT', 'TEXTAREA'].includes(e.target.tagName) || e.target.isContentEditable) return;
 
       if (e.key === 'Backspace' || e.key === 'Enter' || e.key.length === 1) {
         e.preventDefault();
@@ -334,6 +350,7 @@
         this.currentInput = '';
         this.isAsking = false;
         this.isPassword = false;
+        this.focused = false;
         this.promptSegments = [];
         this.rawPrompt = '';
 
@@ -689,9 +706,11 @@
       this.ctx.font = `${this.fontSize}px "Consolas", "Courier New", Courier, monospace`;
 
       if (this.isAsking && i === totalVisualLines.length - 1) {
-        if (Date.now() % 1000 < 500) {
-          this.ctx.fillStyle = '#FFFFFF';
-          this.ctx.fillText('█', x, y);
+        if (this.focused) {
+          if (Date.now() % 1000 < 500) {
+            this.ctx.fillStyle = '#FFFFFF';
+            this.ctx.fillText('█', x, y);
+          }
         }
       }
 
