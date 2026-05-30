@@ -348,19 +348,19 @@
           this.lastMessage = msg.data;
           this.lastSender = msg.sender;
           this._messageQueue.push(msg);
-          const threads = Scratch.vm.runtime.startHats('tfXserve_whenMessageReceived');
+          const threads = Scratch.vm.runtime.startHats('kbXserve_whenMessageReceived');
           console.log(`[Xserve] Message received! Fired ${threads.length} threads.`);
         } else if (msg.type === 'client_joined') {
           this.lastEventClient = msg.id;
           this._clientEventQueue.push({ event: 'joined', id: msg.id });
-          const threads = Scratch.vm.runtime.startHats('tfXserve_whenClientEvent', {
+          const threads = Scratch.vm.runtime.startHats('kbXserve_whenClientEvent', {
             EVENT: 'joined',
           });
           console.log(`[Xserve] Client joined! Fired ${threads.length} threads.`);
         } else if (msg.type === 'client_left') {
           this.lastEventClient = msg.id;
           this._clientEventQueue.push({ event: 'left', id: msg.id });
-          const threads = Scratch.vm.runtime.startHats('tfXserve_whenClientEvent', {
+          const threads = Scratch.vm.runtime.startHats('kbXserve_whenClientEvent', {
             EVENT: 'left',
           });
           console.log(`[Xserve] Client left! Fired ${threads.length} threads.`);
