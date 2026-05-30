@@ -711,7 +711,9 @@
 
     whenMessageReceived() {
       if (this._messageQueue.length === 0) return false;
-      this._messageQueue.shift();
+      const nextMessage = this._messageQueue.shift();
+      this.lastMessage = nextMessage.data;
+      this.lastSender = nextMessage.sender;
       return true;
     }
 
