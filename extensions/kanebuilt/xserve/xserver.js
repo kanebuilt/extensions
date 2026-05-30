@@ -388,6 +388,15 @@ wss.on('connection', (ws, req) => {
 
       switch (data.type) {
         case 'create': {
+          if (currentRoom) {
+            ws.send(
+              JSON.stringify({
+                type: 'error',
+                message: 'Leave the current room before creating another room.',
+              }),
+            );
+            return;
+          }
           if (!sanitizedRoom) {
             ws.send(JSON.stringify({ type: 'error', message: 'Invalid room name.' }));
             return;
@@ -425,6 +434,15 @@ wss.on('connection', (ws, req) => {
         }
 
         case 'join': {
+          if (currentRoom) {
+            ws.send(
+              JSON.stringify({
+                type: 'error',
+                message: 'Leave the current room before joining another room.',
+              }),
+            );
+            return;
+          }
           if (!sanitizedRoom) {
             ws.send(JSON.stringify({ type: 'error', message: 'Invalid room name.' }));
             return;
