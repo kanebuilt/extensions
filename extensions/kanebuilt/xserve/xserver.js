@@ -120,7 +120,7 @@ class RoomStore {
 
   getPublicRoomNames() {
     return Object.entries(this.rooms)
-      .filter(([, roomState]) => !roomState.password || roomState.isPublic)
+      .filter(([, roomState]) => roomState.isPublic)
       .map(([roomName]) => roomName);
   }
 }
@@ -220,7 +220,7 @@ const recordRoomMessage = (roomName, count = 1) => {
 const isRoomPublic = (roomName) => {
   const roomRecord = roomStore.getRoom(roomName);
   if (!roomRecord) return false;
-  return !roomRecord.password || roomRecord.isPublic;
+  return roomRecord.isPublic;
 };
 
 const getStatsPayload = (includeSensitiveDetails = false) => ({
