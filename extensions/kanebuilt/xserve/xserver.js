@@ -2,7 +2,10 @@
 
 /*
  * Xserve signalling server ("Xserver")
- * Run with `npm start` or `pnpm start`
+ *
+ * Requires:
+ * - Node.js v18 or later
+ * - wss installed via `npm install ws`
  */
 
 import WebSocket, { WebSocketServer } from 'ws';
